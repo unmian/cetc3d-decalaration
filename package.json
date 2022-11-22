@@ -1,0 +1,51 @@
+{
+  "name": "@unmian/cetc3d-declaration",
+  "version": "0.0.2",
+  "keywords": [
+    "cetc3d",
+    "dts",
+    "types",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unmian/cetc3d-declaration"
+  },
+  "homepage": "https://github.com/unmian/cetc3d-declaration",
+  "bugs": "https://github.com/unmian/cetc3d-declaration/issues",
+  "files": [
+    "const",
+    "control",
+    "core",
+    "effect",
+    "graphic",
+    "layer",
+    "map",
+    "material",
+    "query",
+    "thing",
+    "widget",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "f2elint scan",
+    "publish:private": "pnpm publish --no-git-checks --registry https://npm.lescity.com.cn",
+    "unpublish:private": "pnpm unpublish  --force --registry https://npm.lescity.com.cn"
+  },
+  "devDependencies": {
+    "cesium": "^1.99.0",
+    "f2elint": "^2.2.1",
+    "husky": "^8.0.1",
+    "typescript": "^4.7.4"
+  },
+  "types": "index.d.ts",
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "ie >= 10",
+    "iOS >= 8",
+    "Android >= 4"
+  ]
+}

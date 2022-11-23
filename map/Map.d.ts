@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 12:57:05
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 20:15:40
+ * @LastEditTime: 2022-11-22 20:33:04
  * @FilePath: /cetc3d-declaration/map/Map.d.ts
  * @Description: 地图类 ，这是构造三维地球的一切的开始起点
  */
@@ -678,21 +678,21 @@ export interface Map extends BaseClass {
 // 地图构造选项
 export interface ConstructorOptions {
   // 场景参数
-  scene: SceneOptions;
+  scene?: SceneOptions;
   // 控件参数
-  control: ControlOptions;
+  control?: ControlOptions;
   // 地形服务配置
-  terrain: TerrainOptions;
+  terrain?: TerrainOptions;
   // 底图图层配置
-  basemaps: BasemapOptions;
+  basemaps?: BasemapOptions;
   // 可以叠加显示的图层配置
-  layers: LayerOptions;
+  layers?: LayerOptions;
   // 图层中统一的url模版，。比如可以将服务url前缀统一使用模板，方便修改或动态配置
   templateValues?: object;
   // 标识当前三维场景的国内坐标系（用于部分图层内对比判断来自动纠偏或加偏）
-  chinaCRS: ChinaCRS;
+  chinaCRS?: ChinaCRS;
   // 使用的语言（如中文、英文等）
-  lang: LangType;
+  lang?: LangType;
 }
 
 // 底图图层配置

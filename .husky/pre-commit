@@ -2,4 +2,3 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 f2elint commit-file-scan
-yarn test

@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:48:07
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 16:31:35
+ * @LastEditTime: 2022-12-01 16:49:20
  * @FilePath: /cetc3d-declaration/layer/BaseLayer.d.ts
  * @Description: 栅格Tile瓦片图层 基类
  */
@@ -10,7 +10,7 @@
 import Cesium from "cesium";
 import { BaseClass } from "../core/BaseClass";
 import { State } from "../const/State";
-import { CameraViewOption, Map } from "../map/Map";
+import { CameraViewOptions, Map } from "../map/Map";
 import { PopupOption } from "./tileLayer/BaseTileLayer";
 
 export interface BaseLayer extends BaseClass {
@@ -116,7 +116,7 @@ interface ConstructorOptions {
   // 透明度，取值范围：0.0-1.0
   opacity?: number;
   // 图层自定义定位视角
-  center?: CameraViewOption;
+  center?: CameraViewOptions;
   // 当图层支持popup弹窗时，绑定的值
   popup?: string | PopupOption[];
   // 当图层支持tooltip弹窗时，绑定的值

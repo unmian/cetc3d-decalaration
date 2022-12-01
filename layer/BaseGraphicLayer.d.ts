@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 15:04:51
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 16:31:25
+ * @LastEditTime: 2022-12-01 16:49:51
  * @FilePath: /cetc3d-declaration/layer/BaseGraphicLayer.d.ts
  * @Description: 矢量数据图层 Base基类
  */
@@ -10,7 +10,7 @@ import Cesium from "cesium";
 import { BaseLayer, ConstructorOptions as BaseLayerConstructorOptions } from "./BaseLayer";
 import { EventType } from "../const/EventType";
 import { BaseGraphic } from "../graphic/BaseGraphic";
-import { ContextMenuOption, FlyToExtentOption } from "../map/Map";
+import { ContextMenuOptions, FlyToExtentOptions } from "../map/Map";
 
 export interface BaseGraphicLayer extends BaseLayer {
   // 当前栅格瓦片图层支持的EventType事件类型
@@ -47,7 +47,7 @@ export interface BaseGraphicLayer extends BaseLayer {
    * @param {object} options 参数对象(预留，目前未用)
    * @return {this}
    */
-  bindContextMenu(content: ContextMenuOption[], options?: object): this;
+  bindContextMenu(content: ContextMenuOptions[], options?: object): this;
 
   /**
    * @description: 绑定鼠标单击对象后的弹窗
@@ -99,7 +99,7 @@ export interface BaseGraphicLayer extends BaseLayer {
    * @description: 获取绑定的右键菜单数组
    * @return {Array<ContextMenuOption>}
    */
-  getContextMenu(): ContextMenuOption[];
+  getContextMenu(): ContextMenuOptions[];
 
   /**
    * @description: 是否有绑定的右键菜单
@@ -183,7 +183,7 @@ export interface BaseGraphicLayer extends BaseLayer {
 // 构造配置项
 export interface ConstructorOptions extends BaseLayerConstructorOptions {
   // 图层自定义定位的矩形区域，与center二选一即可
-  extent?: FlyToExtentOption;
+  extent?: FlyToExtentOptions;
   // 加载完成数据后是否自动飞行定位到数据所在的区域
   flyTo?: boolean;
   // 控制图层的叠加层次（部分图层），默认按加载的顺序进行叠加，但也可以自定义叠加顺序，数字大的在上面
@@ -191,7 +191,7 @@ export interface ConstructorOptions extends BaseLayerConstructorOptions {
 }
 
 // 绑定弹窗配置
-interface BindPopupOption {
+export interface BindPopupOption {
   // 窗口的XY轴偏移的像素位置
   anchor?: number[];
   // 是否使用内置的Html模版，false时全部使用外部指定的html

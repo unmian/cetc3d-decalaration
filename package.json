@@ -44,6 +44,7 @@
     "husky": "^8.0.1",
     "typescript": "^4.7.4"
   },
+  "main": "",
   "types": "index.d.ts",
   "browserslist": [
     "> 0.5%",

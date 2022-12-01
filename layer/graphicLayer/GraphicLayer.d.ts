@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 15:02:17
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 16:30:54
+ * @LastEditTime: 2022-12-01 16:55:44
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/GraphicLayer.d.ts
  * @Description: 矢量数据图层
  */
@@ -223,7 +223,7 @@ export interface GraphicLayer extends BaseGraphicLayer {
 }
 
 // 构造配置项
-interface ConstructorOptions extends BaseGraphicLayerOptions {
+export interface ConstructorOptions extends BaseGraphicLayerOptions {
   // 是否可编辑
   hasEdit?: boolean;
   // 完成标绘时是否自动启动编辑(需要hasEdit:true时)

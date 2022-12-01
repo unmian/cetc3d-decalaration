@@ -2,13 +2,14 @@
  * @Author: Quarter
  * @Date: 2022-11-22 10:40:21
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:52:53
+ * @LastEditTime: 2022-12-01 21:52:58
  * @FilePath: /cetc3d-declaration/layer/index.d.ts
  * @Description: 入口文件
  */
 
 import { BaseGraphicLayer } from "./BaseGraphicLayer";
 import { BaseLayer } from "./BaseLayer";
+import { ArcGisWfsLayer } from "./graphicLayer/ArcGisWfsLayer";
 import { GraphicLayer } from "./graphicLayer/GraphicLayer";
 import { TilesetLayer } from "./graphicLayer/TilesetLayer";
 import { ArcGisLayer } from "./tileLayer/ArcGisLayer";
@@ -21,7 +22,7 @@ export interface Layer {
   // ArcGIS标准服务图层
   ArcGisLayer: ArcGisLayer;
   // ArcGIS WFS服务图层， 按瓦片网格分块分层加载
-  ArcGisWfsLayer: any;
+  ArcGisWfsLayer: ArcGisWfsLayer;
   // ArcGIS WFS服务图层， 一次性请求加载，适合少量数据时使用
   ArcGisWfsSingleLayer: any;
   // 百度地图

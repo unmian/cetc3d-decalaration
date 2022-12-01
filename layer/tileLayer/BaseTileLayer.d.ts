@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:48:07
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 16:31:15
+ * @LastEditTime: 2022-12-01 16:56:10
  * @FilePath: /cetc3d-declaration/layer/tileLayer/BaseTileLayer.d.ts
  * @Description: 栅格Tile瓦片图层 基类
  */
@@ -85,7 +85,7 @@ export interface BaseTileLayer extends BaseLayer {
 }
 
 // 构造选项
-interface ConstructorOptions extends BaseLayerConstructorOptions {
+export interface ConstructorOptions extends BaseLayerConstructorOptions {
   // 加载完成数据后是否自动飞行定位到数据所在的区域
   flyTo?: boolean;
   // 瓦片所支持的最低层级，如果数据没有第0层，该参数必须配置,当地图小于该级别时，平台不去请求服务数据

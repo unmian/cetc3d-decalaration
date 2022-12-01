@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-30 17:18:41
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 15:03:53
+ * @LastEditTime: 2022-12-01 16:55:50
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/TilesetLayer.d.ts
  * @Description: 3dtiles 三维模型图层
  */
@@ -105,7 +105,7 @@ export interface TilesetLayer extends BaseGraphicLayer {
 }
 
 // 构造函数配置项
-interface ConstructorOptions extends BaseGraphicLayerConstructorOptions {
+export interface ConstructorOptions extends BaseGraphicLayerConstructorOptions {
   // tileset的主JSON文件的 url
   url: Cesium.Resource | string;
   // 用于驱动细化细节级别的最大屏幕空间错误。数值加大，能让最终成像变模糊

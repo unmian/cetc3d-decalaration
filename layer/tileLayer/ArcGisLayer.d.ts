@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-12-01 16:42:44
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:51:57
+ * @LastEditTime: 2022-12-01 16:56:04
  * @FilePath: /cetc3d-declaration/layer/tileLayer/ArcGisLayer.d.ts
  * @Description: ArcGIS标准服务图层
  */
@@ -50,7 +50,7 @@ export interface ArcGisLayer extends BaseTileLayer {
 }
 
 // 构造配置项
-interface ConstructorOptions extends BaseTileLayerConstructorOptions {
+export interface ConstructorOptions extends BaseTileLayerConstructorOptions {
   // ArcGIS MapServer服务的网址
   url: Cesiusm.Resource | string;
   // 要显示的图层的逗号分隔列表，如果应显示所有图层，则未定义

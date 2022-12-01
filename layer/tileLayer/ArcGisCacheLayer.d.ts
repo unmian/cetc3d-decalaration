@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:36:58
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:44:03
+ * @LastEditTime: 2022-12-01 16:55:59
  * @FilePath: /cetc3d-declaration/layer/tileLayer/ArcGisCacheLayer.d.ts
  * @Description: 金字塔瓦片图层
  */
@@ -30,7 +30,7 @@ export interface ArcGisCacheLayer extends BaseTileLayer {
 }
 
 // 构造配置项
-interface ConstructorOptions extends BaseTileLayerConstructorOptions {
+export interface ConstructorOptions extends BaseTileLayerConstructorOptions {
   // url请求的瓦片图片名称是否大写
   upperCase?: boolean;
 }

@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-22 10:40:21
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 14:47:11
+ * @LastEditTime: 2022-12-01 15:03:50
  * @FilePath: /cetc3d-declaration/layer/index.d.ts
  * @Description: 入口文件
  */
@@ -11,6 +11,7 @@ import { BaseGraphicLayer } from "./BaseGraphicLayer";
 import { BaseLayer } from "./BaseLayer";
 import { ArcGisCacheLayer } from "./tileLayer/ArcGisCacheLayer";
 import { BaseTileLayer } from "./tileLayer/BaseTileLayer";
+import { TilesetLayer } from "./graphicLayer/TilesetLayer";
 
 export interface Layer {
   // AraGIS生成的金字塔瓦片数据
@@ -100,7 +101,7 @@ export interface Layer {
   // 瓦片信息，一般用于测试
   TileInfoLayer: any;
   // 3dtiles 三维模型图层
-  TilesetLayer: any;
+  TilesetLayer: TilesetLayer;
   // TileMapService 提供由MapTiler，GDAL2Tiles等生成的切片图像
   TmsLayer: any;
   // WFS图层

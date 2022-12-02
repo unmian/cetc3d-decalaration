@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:48:07
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:49:20
+ * @LastEditTime: 2022-12-02 13:38:52
  * @FilePath: /cetc3d-declaration/layer/BaseLayer.d.ts
  * @Description: 栅格Tile瓦片图层 基类
  */
@@ -22,6 +22,8 @@ export interface BaseLayer extends BaseClass {
   readonly isAdded: boolean;
   // 透明度，取值范围：0.0-1.0
   opacity: number;
+  // 显示隐藏状态
+  show: boolean;
   // 当前对象的状态
   readonly state: State;
   // 图层类型

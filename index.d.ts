@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:01:04
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-23 09:11:19
+ * @LastEditTime: 2022-12-02 11:30:16
  * @FilePath: /cetc3d-declaration/index.d.ts
  * @Description:
  */
@@ -20,7 +20,7 @@ import { State as StateDeclaration } from "./const/State";
 import { Control } from "./control";
 import { Effect as EffectConstructor } from "./effect";
 import { Graphic as GraphicConstructor } from "./graphic";
-import { Layer as LyaerDeclaration } from "./layer";
+import { Layer as LayerDeclaration } from "./layer";
 import { Material as MaterialDeclaration } from "./material";
 import { Query as QueryDeclaration } from "./query";
 import { Thing as ThingDeclaration } from "./thing";
@@ -58,7 +58,7 @@ declare namespace CETC3D {
   // 坐标点类（含经度、纬度、高度）
   type LatLngPoint = any;
   // 图层库
-  type Layer = LyaerDeclaration;
+  type Layer = LayerDeclaration;
   // 图层类型
   type LayerType = LayerTypeDeclaration;
   // 图层相关 静态方法

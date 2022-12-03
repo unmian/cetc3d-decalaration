@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-12-01 16:54:43
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 21:51:58
+ * @LastEditTime: 2022-12-03 16:45:44
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/ArcGisWfsLayer.d.ts
  * @Description: ArcGIS WFS服务图层， 按瓦片网格分块分层加载
  */
@@ -19,6 +19,13 @@ export interface ArcGisWfsLayer extends LodGraphicLayer {
    * @return {GraphicLayer}
    */
   new (options: ConstructorOptions): ArcGisWfsLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 更新where条件后 刷新数据

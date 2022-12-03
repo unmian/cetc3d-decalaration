@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 15:04:51
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:49:51
+ * @LastEditTime: 2022-12-03 16:44:30
  * @FilePath: /cetc3d-declaration/layer/BaseGraphicLayer.d.ts
  * @Description: 矢量数据图层 Base基类
  */
@@ -40,6 +40,13 @@ export interface BaseGraphicLayer extends BaseLayer {
    * @return {BaseGraphicLayer}
    */
   new (options: ConstructorOptions): BaseGraphicLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 绑定右键菜单

@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:36:58
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:55:59
+ * @LastEditTime: 2022-12-03 16:44:56
  * @FilePath: /cetc3d-declaration/layer/tileLayer/ArcGisCacheLayer.d.ts
  * @Description: 金字塔瓦片图层
  */
@@ -20,6 +20,20 @@ export interface ArcGisCacheLayer extends BaseTileLayer {
    * @return {ArcGisCacheLayer}
    */
   new (options: ConstructorOptions): ArcGisCacheLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 创建用于图层的 ImageryProvider对象

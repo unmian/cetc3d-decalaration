@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:48:07
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:56:10
+ * @LastEditTime: 2022-12-03 16:44:40
  * @FilePath: /cetc3d-declaration/layer/tileLayer/BaseTileLayer.d.ts
  * @Description: 栅格Tile瓦片图层 基类
  */
@@ -68,6 +68,13 @@ export interface BaseTileLayer extends BaseLayer {
    * @return {BaseTileLayer}
    */
   new (options: ConstructorOptions): BaseTileLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 设置透明度

@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-30 17:18:41
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:55:50
+ * @LastEditTime: 2022-12-03 16:45:09
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/TilesetLayer.d.ts
  * @Description: 3dtiles 三维模型图层
  */
@@ -69,6 +69,13 @@ export interface TilesetLayer extends BaseGraphicLayer {
    * @return {TilesetLayer}
    */
   new (options: ConstructorOptions): TilesetLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 模型自动贴地计算及处理, 因为模型在设计或生产时，模型的视角中心位置不一定在0,0,0点，此方法不是唯一准确的

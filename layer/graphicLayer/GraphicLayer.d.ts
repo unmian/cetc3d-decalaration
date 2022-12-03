@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 15:02:17
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:55:44
+ * @LastEditTime: 2022-12-03 16:45:35
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/GraphicLayer.d.ts
  * @Description: 矢量数据图层
  */
@@ -75,6 +75,13 @@ export interface GraphicLayer extends BaseGraphicLayer {
    * @return {GraphicLayer}
    */
   new (options: ConstructorOptions): GraphicLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 激活编辑，绑定相关处理，同 hasEdit=true
@@ -174,13 +181,6 @@ export interface GraphicLayer extends BaseGraphicLayer {
    * @return {this}
    */
   removeGraphic(graphic: BaseGraphic, hasDestory?: boolean): this;
-
-  /**
-   * @description: 更新图层参数
-   * @param {ConstructorOptions} options 配置项
-   * @return {this}
-   */
-  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 开始绘制矢量数据，绘制的数据会加载在当前图层。

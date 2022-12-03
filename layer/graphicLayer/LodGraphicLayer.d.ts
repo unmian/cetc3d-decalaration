@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-12-01 17:38:13
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 21:54:37
+ * @LastEditTime: 2022-12-03 16:45:21
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/LodGraphicLayer.d.ts
  * @Description: 矢量数据LOD分层分块加载类
  */
@@ -36,6 +36,13 @@ export interface LodGraphicLayer extends BaseGraphicLayer {
   new (options: ConstructorOptions): LodGraphicLayer;
 
   /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
+
+  /**
    * @description: 清除图层内所有矢量数据
    * @param {boolean} hasDestory 是否释放矢量对象
    * @return
@@ -63,13 +70,6 @@ export interface LodGraphicLayer extends BaseGraphicLayer {
    * @return
    */
   reload(): void;
-
-  /**
-   * @description: 更新图层参数
-   * @param {ConstructorOptions} options 与类的构造方法参数相同
-   * @return {this}
-   */
-  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 根据 attr属性 更新 矢量对象，主要是属性是动态变化的场景下使用

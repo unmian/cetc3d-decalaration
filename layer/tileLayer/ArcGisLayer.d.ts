@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-12-01 16:42:44
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 16:56:04
+ * @LastEditTime: 2022-12-03 16:44:50
  * @FilePath: /cetc3d-declaration/layer/tileLayer/ArcGisLayer.d.ts
  * @Description: ArcGIS标准服务图层
  */
@@ -32,6 +32,13 @@ export interface ArcGisLayer extends BaseTileLayer {
    * @return {ArcGisCacheLayer}
    */
   new (options: ConstructorOptions): ArcGisLayer;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
 
   /**
    * @description: 创建用于图层的 ImageryProvider对象

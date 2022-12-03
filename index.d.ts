@@ -2,11 +2,12 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:01:04
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-02 11:30:16
+ * @LastEditTime: 2022-12-03 10:40:41
  * @FilePath: /cetc3d-declaration/index.d.ts
  * @Description:
  */
 
+import Cesium from "cesium";
 import { BaseClass as BaseClassConstructor } from "./core/BaseClass";
 import { BaseThing as BaseThingConstructor } from "./core/BaseThing";
 import { KeyboardRoam as KeyboardRoamConstructor } from "./map/control/KeyboardRoam";
@@ -24,6 +25,7 @@ import { Layer as LayerDeclaration } from "./layer";
 import { Material as MaterialDeclaration } from "./material";
 import { Query as QueryDeclaration } from "./query";
 import { Thing as ThingDeclaration } from "./thing";
+import { HaoUtil } from "./util/haoutil";
 import { Widget as WidgetDeclaration } from "./widget";
 
 declare namespace CETC3D {
@@ -114,6 +116,8 @@ declare const cetc3d: {
   readonly BaseThing: CETC3D.BaseThing;
   // 国内偏移坐标系
   readonly ChinaCRS: CETC3D.ChinaCRS;
+  // Cesium API
+  readonly Cesium: typeof Cesium;
   // 坐标系
   readonly CRS: CETC3D.CRS;
   // 控制器库
@@ -187,3 +191,5 @@ declare const cetc3d: {
   // 风场相关 静态方法
   readonly WindUtil: CETC3D.WindUtil;
 };
+
+declare const haoutil: HaoUtil;

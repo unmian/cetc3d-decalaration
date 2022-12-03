@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 12:57:05
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 20:33:04
+ * @LastEditTime: 2022-12-02 14:40:27
  * @FilePath: /cetc3d-declaration/map/Map.d.ts
  * @Description: 地图类 ，这是构造三维地球的一切的开始起点
  */
@@ -329,7 +329,7 @@ export interface Map extends BaseClass {
    * @param {FlyToGraphicOptions} options 配置项
    * @return
    */
-  flyToGraphic(graphic: BaseGraphic, options: FlyToGraphicOptions): void;
+  flyToGraphic(graphic: BaseGraphic, options?: FlyToGraphicOptions): void;
 
   /**
    * @description: 定位至目标点(非相机位置)
@@ -337,7 +337,7 @@ export interface Map extends BaseClass {
    * @param {FlyToPointOptions} options 配置项
    * @return
    */
-  flyToPoint(point: LatLngPoint | Cesium.Cartesian3, options: FlyToPointOptions): void;
+  flyToPoint(point: LatLngPoint | Cesium.Cartesian3, options?: FlyToPointOptions): void;
 
   /**
    * @description: 定位至坐标数组
@@ -345,7 +345,7 @@ export interface Map extends BaseClass {
    * @param {FlyToPositionsOptions} options 配置项
    * @return
    */
-  flyToPositions(positions: Cesium.Cartesian3[], options: FlyToPositionsOptions): void;
+  flyToPositions(positions: Cesium.Cartesian3[], options?: FlyToPositionsOptions): void;
 
   /**
    * @description: 获取所有basemps底图图层

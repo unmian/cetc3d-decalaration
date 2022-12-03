@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 11:26:25
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 16:28:08
+ * @LastEditTime: 2022-12-03 10:42:45
  * @FilePath: /cetc3d-declaration/core/BaseClass.d.ts
  * @Description: 基础类，SDK中几乎所有类的基类，都是继承该基类的
  */
@@ -57,7 +57,7 @@ export interface BaseClass {
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
    * @return {boolean}
    */
-  off(types: EventType | EventType[], fn: Function, context: Object): this;
+  off(types: EventType | EventType[], fn: Function, context?: Object): this;
 
   /**
    * @description: 绑定指定类型事件监听器
@@ -66,7 +66,7 @@ export interface BaseClass {
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
    * @return {boolean}
    */
-  off(types: EventType | EventType[], fn: Function, context: Object): this;
+  on(types: EventType | EventType[], fn: Function, context?: Object): this;
 
   /**
    * @description: 绑定一次性执行的指定类型事件监听器 与on类似，监听器只会被触发一次，然后被删除
@@ -75,7 +75,7 @@ export interface BaseClass {
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
    * @return {boolean}
    */
-  once(types: EventType | EventType[], fn: Function, context: Object): this;
+  once(types: EventType | EventType[], fn: Function, context?: Object): this;
 
   /**
    * @description: 移除抛出事件到父类

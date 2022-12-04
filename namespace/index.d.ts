@@ -2,13 +2,11 @@
  * @Author: Quarter
  * @Date: 2022-12-03 17:30:44
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-04 14:13:11
+ * @LastEditTime: 2022-12-04 15:24:42
  * @FilePath: /cetc3d-declaration/namespace/index.d.ts
  * @Description: 命名空间
  */
 
-import { BaseClass as BaseClassConstructor } from "../core/BaseClass";
-import { BaseThing as BaseThingConstructor } from "../core/BaseThing";
 import { KeyboardRoam as KeyboardRoamConstructor } from "../map/control/KeyboardRoam";
 import { Map as MapConstructor } from "../map/Map";
 import { ChinaCRS as ChinaCRSValue } from "../const/ChinaCRS";
@@ -20,6 +18,9 @@ import { State as StateValue } from "../const/State";
 import { BaseControl as BaseControlConstructor } from "../control/BaseControl";
 import { DistanceLegend as DistanceLegendConstructor } from "../control/DistanceLegend";
 import { Compass as CompassConstructor } from "../control/Compass";
+import { BaseClass as BaseClassConstructor } from "../core/BaseClass";
+import { BaseThing as BaseThingConstructor } from "../core/BaseThing";
+import { LatLngPoint as LatLngPointConstructor } from "../core/LatLngPoint";
 import { BaseEffect as BaseEffectConstructor } from "../effect/BaseEffect";
 import { BaseGraphic as BaseGraphicConstructor } from "../graphic/BaseGraphic";
 import { BaseGraphicLayer as BaseGraphicLayerConstructor } from "../layer/BaseGraphicLayer";
@@ -32,7 +33,7 @@ import { ArcGisCacheLayer as ArcGisCacheLayerConstructor } from "../layer/tileLa
 import { ArcGisLayer as ArcGisLayerConstructor } from "../layer/tileLayer/ArcGisLayer";
 import { BaseTileLayer as BaseTileLayerConstructor } from "../layer/tileLayer/BaseTileLayer";
 
-declare namespace CETC3D {
+export namespace CETC3D {
   // 金字塔瓦片图层
   type ArcGisCacheLayer = ArcGisCacheLayerConstructor;
   // ArcGIS标准服务图层
@@ -80,7 +81,7 @@ declare namespace CETC3D {
   // 坐标数组处理类
   type LatLngArray = any;
   // 坐标点类（含经度、纬度、高度）
-  type LatLngPoint = any;
+  type LatLngPoint = LatLngPointConstructor;
   // 图层类型
   type LayerType = LayerTypeValue;
   // 图层相关 静态方法

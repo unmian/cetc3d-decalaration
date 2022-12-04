@@ -351,7 +351,7 @@ export interface ConstructorOptions {
   stopPropagation?: boolean;
 }
 
-// // 支持事件类型集合
+// 支持事件类型集合
 type BaseGraphicEventTypeCollection = Pick<
   EventTypeCollection,
   // 添加对象

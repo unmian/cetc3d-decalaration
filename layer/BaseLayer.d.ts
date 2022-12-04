@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 10:48:07
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-04 11:10:10
+ * @LastEditTime: 2022-12-04 15:30:57
  * @FilePath: /cetc3d-declaration/layer/BaseLayer.d.ts
  * @Description: 栅格Tile瓦片图层 基类
  */
@@ -11,6 +11,14 @@ import Cesium from "cesium";
 import { EventType } from "../const/EventType";
 import { State } from "../const/State";
 import { CameraViewOptions, Map } from "../map/Map";
+import { BaseGraphicLayer } from "./BaseGraphicLayer";
+import { ArcGisWfsLayer } from "./graphicLayer/ArcGisWfsLayer";
+import { GraphicLayer } from "./graphicLayer/GraphicLayer";
+import { LodGraphicLayer } from "./graphicLayer/LodGraphicLayer";
+import { TilesetLayer } from "./graphicLayer/TilesetLayer";
+import { ArcGisCacheLayer } from "./tileLayer/ArcGisCacheLayer";
+import { ArcGisLayer } from "./tileLayer/ArcGisLayer";
+import { BaseTileLayer } from "./tileLayer/BaseTileLayer";
 
 export interface BaseLayer {
   // 是否可以调整透明度
@@ -245,3 +253,15 @@ export interface PopupOption {
   // 追加的计量单位值
   unit?: string;
 }
+
+// 图层变种
+export type LayerVariant =
+  | BaseLayer
+  | BaseGraphicLayer
+  | ArcGisWfsLayer
+  | GraphicLayer
+  | LodGraphicLayer
+  | TilesetLayer
+  | ArcGisCacheLayer
+  | ArcGisLayer
+  | BaseTileLayer;

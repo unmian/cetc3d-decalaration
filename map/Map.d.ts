@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 12:57:05
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-04 14:06:43
+ * @LastEditTime: 2022-12-04 15:32:38
  * @FilePath: /cetc3d-declaration/map/Map.d.ts
  * @Description: 地图类 ，这是构造三维地球的一切的开始起点
  */
@@ -19,7 +19,7 @@ import { BaseThing } from "../core/BaseThing";
 import { LatLngPoint } from "../core/LatLngPoint";
 import { BaseEffect } from "../effect/BaseEffect";
 import { BaseGraphic } from "../graphic/BaseGraphic";
-import { BaseLayer } from "../layer/BaseLayer";
+import { LayerVariant } from "../layer/BaseLayer";
 import { BaseGraphicLayer } from "../layer/BaseGraphicLayer";
 import { GraphicLayer } from "../layer/graphicLayer/GraphicLayer";
 import { BaseTileLayer } from "../layer/tileLayer/BaseTileLayer";
@@ -102,11 +102,11 @@ export interface Map {
 
   /**
    * @description: 添加图层到地图上
-   * @param {BaseLayer} layer 图层对象
+   * @param {LayerVariant} layer 图层对象
    * @param {boolean} showVal 如果传值，覆盖图层的show属性
    * @return {this}
    */
-  addLayer(layer: BaseLayer, showVal: boolean): this;
+  addLayer(layer: LayerVariant, showVal: boolean): this;
 
   /**
    * @description: 添加Thing对象到地图上
@@ -291,9 +291,9 @@ export interface Map {
   /**
    * @description: 获取所有basemps底图图层
    * @param {boolean} removeEmptyGroup 是否移除 空图层组
-   * @return {Array<BaseLayer>}
+   * @return {Array<LayerVariant>}
    */
-  getBasemaps(removeEmptyGroup?: boolean): BaseLayer[];
+  getBasemaps(removeEmptyGroup?: boolean): LayerVariant[];
 
   /**
    * @description: 获取当前相机视角参数
@@ -356,23 +356,23 @@ export interface Map {
    * @description: 根据指定属性获取图层
    * @param {object|string|number} key 属性值（如id、name值）
    * @param {string} attrName 属性名称
-   * @return {BaseLayer}
+   * @return {LayerVariant}
    */
-  getLayer(key: object | string | number, attrName?: string): BaseLayer;
+  getLayer(key: object | string | number, attrName?: string): LayerVariant;
 
   /**
    * @description: 根据ID或取图层
    * @param {string|number} id 图层id或uuid
-   * @return {BaseLayer}
+   * @return {LayerVariant}
    */
-  getLayerById(id: string | number): BaseLayer;
+  getLayerById(id: string | number): LayerVariant;
 
   /**
    * @description: 获取所有图层
    * @param {GetLayersOptions} options 配置项
-   * @return {Array<BaseLayer>}
+   * @return {Array<LayerVariant>}
    */
-  getLayers(options: GetLayersOptions): BaseLayer[];
+  getLayers(options?: GetLayersOptions): LayerVariant[];
 
   /**
    * @description: 获取图层ID值，按顺序取值。 没有id的图层，会自动使用本方法进行id赋值处理
@@ -396,16 +396,16 @@ export interface Map {
 
   /**
    * @description: 获取所有瓦片图层，可以用于卷帘对比
-   * @return {Array<BaseLayer>}
+   * @return {Array<LayerVariant>}
    */
-  getTileLayers(): BaseLayer[];
+  getTileLayers(): LayerVariant[];
 
   /**
    * @description: 是否有指定的控件存在（就是已经addControl的控件）
-   * @param {BaseLayer|string} control 指定的控件或控件ID
+   * @param {BaseControl|string} control 指定的控件或控件ID
    * @return {boolean}
    */
-  hasControl(control: BaseLayer | string): boolean;
+  hasControl(control: BaseControl | string): boolean;
 
   /**
    * @description: 是否绑定了抛出事件到指定父类
@@ -416,10 +416,10 @@ export interface Map {
 
   /**
    * @description: 是否有指定的图层存在（就是已经addLayer的图层）
-   * @param {BaseLayer|string} layer 指定的图层或图层ID
+   * @param {LayerVariant|string} layer 指定的图层或图层ID
    * @return {boolean}
    */
-  hasLayer(layer: BaseLayer | string): boolean;
+  hasLayer(layer: LayerVariant | string): boolean;
 
   /**
    * @description: 是否有指定的图层存在（就是已经addLayer的图层）
@@ -564,11 +564,11 @@ export interface Map {
 
   /**
    * @description: 移除图层
-   * @param {BaseLayer} layer 需要移除的图层
+   * @param {LayerVariant} layer 需要移除的图层
    * @param {boolean} hasDestory 是否释放
    * @return {this}
    */
-  removeLayer(layer: BaseLayer, hasDestory: boolean): this;
+  removeLayer(layer: LayerVariant, hasDestory: boolean): this;
 
   /**
    * @description: 移除Thing对象
@@ -588,9 +588,9 @@ export interface Map {
   /**
    * @description: 重新设置basemps底图图层，对options.basemaps重新赋值
    * @param {Array<BasemapOptions>} arr 底图图层配置
-   * @return {Array<BaseLayer>}
+   * @return {Array<LayerVariant>}
    */
-  setBasemapsOptions(arr: BasemapOptions[]): BaseLayer[];
+  setBasemapsOptions(arr: BasemapOptions[]): LayerVariant[];
 
   /**
    * @description: 将相机本身定位至指定位置
@@ -618,9 +618,9 @@ export interface Map {
   /**
    * @description: 重新设置layers图层，对options.layers重新赋值
    * @param {Array<LayerOptions>} arr 可以叠加显示的图层配置
-   * @return {Array<BaseLayer>}
+   * @return {Array<LayerVariant>}
    */
-  setLayersOptions(arr: LayerOptions[]): BaseLayer[];
+  setLayersOptions(arr: LayerOptions[]): LayerVariant[];
 
   /**
    * @description: 设置鼠标操作限定的Pitch范围

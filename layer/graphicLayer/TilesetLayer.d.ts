@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-30 17:18:41
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-03 16:45:09
+ * @LastEditTime: 2022-12-04 11:37:05
  * @FilePath: /cetc3d-declaration/layer/graphicLayer/TilesetLayer.d.ts
  * @Description: 3dtiles 三维模型图层
  */
@@ -10,34 +10,37 @@
 import Cesium from "cesium";
 import {
   BaseGraphicLayer,
+  BindPopupOption,
+  BindTooltipOption,
   ConstructorOptions as BaseGraphicLayerConstructorOptions,
 } from "../BaseGraphicLayer";
+import { FlyToOptions } from "../BaseLayer";
 import { ChinaCRS } from "../../const/ChinaCRS";
+import { EventTypeCollection } from "../../const/EventType";
+import { State } from "../../const/State";
 import { LatLngPoint } from "../../core/LatLngPoint";
-import { EventType } from "../../const/EventType";
+import { BaseGraphic } from "../../graphic/BaseGraphic";
+import { Map, ContextMenuOptions } from "../../map/Map";
 
-export interface TilesetLayer extends BaseGraphicLayer {
-  // 当前类支持的EventType事件类型
-  readonly EventType: Pick<
-    EventType,
-    // 3dtiles模型，模型瓦片初始化完成 该回调只执行一次
-    | "initialTilesLoaded"
-    // 3dtiles模型
-    | "allTilesLoaded"
-    // 完成加载，但未做任何其他处理前
-    | "loadBefore"
-    // 完成加载，执行所有内部处理后
-    | "load"
-  > &
-    BaseGraphicLayer["EventType"];
+export interface TilesetLayer {
+  // 当前栅格瓦片图层支持的EventType事件类型
+  readonly EventType: TilesetLayerEventTypeCollection;
   // 轴方向
   axis: string | Cesium.Axis;
   // 模型当前中心点坐标
   center: LatLngPoint;
+  // 是否可以调整透明度
+  readonly hasOpacity: boolean;
   // 调整修改模型高度
   height: LatLngPoint;
+  // 对象的id标识
+  id: string | number;
   // 开启或设置建筑物特效样式
   marsJzwStyle: boolean | object;
+  // 是否已添加到地图
+  readonly isAdded: boolean;
+  // 透明度，取值范围：0.0-1.0
+  opacity: number;
   // 模型原始的中心点坐标
   readonly orginCenterPoint: LatLngPoint;
   // 模型原始的中心点坐标 （笛卡尔坐标）
@@ -56,12 +59,20 @@ export interface TilesetLayer extends BaseGraphicLayer {
   rotation_z: number;
   // 缩放比例
   scale: number;
+  // 显示隐藏状态
+  show: boolean;
   // 是否鼠标单击高亮显示模型构件
   readonly showClickFeature: boolean;
+  // 当前对象的状态
+  readonly state: State;
   // 模型样式
   style: object | Cesium.Cesium3DTileStyle;
   // 模型对应的 Cesium3DTileset对象
   readonly tileset: Cesium.Cesium3DTileset;
+  // 图层类型
+  readonly type: string;
+  // 内置唯一标识ID
+  readonly uuid: string;
 
   /**
    * @description: 构造函数
@@ -71,11 +82,60 @@ export interface TilesetLayer extends BaseGraphicLayer {
   new (options: ConstructorOptions): TilesetLayer;
 
   /**
-   * @description: 更新图层参数
-   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @description: 对象添加到地图上的创建钩子方法， 每次add时都会调用
+   * @return
+   */
+  _addedHook(): void;
+
+  /**
+   * @description: 对象添加到地图前创建一些对象的钩子方法， 只会调用一次
+   * @return
+   */
+  _mountedHook(): void;
+
+  /**
+   * @description: 对象从地图上移除的创建钩子方法， 每次 remove 时都会调用
+   * @return
+   */
+  _removedHook(): void;
+
+  /**
+   * @description: 添加抛出事件到父类，它将接收传播的事件
+   * @param {Object} obj 父类对象
    * @return {this}
    */
-  setOptions(options: ConstructorOptions): this;
+  addEventParent(obj: object): this;
+
+  /**
+   * @description: 添加到地图上，同 map.addThing
+   * @param {Map} map 地图对象
+   * @return {this}
+   */
+  addTo(map: Map): this;
+
+  /**
+   * @description: 绑定右键菜单
+   * @param {Array<ContextMenuOption>} content 右键菜单配置数组
+   * @param {object} options 参数对象(预留，目前未用)
+   * @return {this}
+   */
+  bindContextMenu(content: ContextMenuOptions[], options?: object): this;
+
+  /**
+   * @description: 绑定鼠标单击对象后的弹窗
+   * @param {string|Function} content 弹窗内容html字符串，或者回调方法
+   * @param {BindPopupOption} options 配置项
+   * @return {this}
+   */
+  bindPopup(content: string | Function, options?: BindPopupOption): this;
+
+  /**
+   * @description: 绑定鼠标移入的弹窗
+   * @param {string|Function} content 弹窗内容html字符串，或者回调方法
+   * @param {BindTooltipOption} options 配置项
+   * @return {this}
+   */
+  bindTooltip(content: string | Function, options?: BindTooltipOption): this;
 
   /**
    * @description: 模型自动贴地计算及处理, 因为模型在设计或生产时，模型的视角中心位置不一定在0,0,0点，此方法不是唯一准确的
@@ -85,6 +145,71 @@ export interface TilesetLayer extends BaseGraphicLayer {
   clampToGround(addHeight?: number): void;
 
   /**
+   * @description: 清除已选中的单体化高亮
+   * @return
+   */
+  clearLastDth(): void;
+
+  /**
+   * @description: 关闭右键菜单
+   * @return {this}
+   */
+  closeContextMenu(): this;
+
+  /**
+   * @description: 关闭弹窗
+   * @return {this}
+   */
+  closePopup(): this;
+
+  /**
+   * @description: 关闭小提示窗
+   * @return {this}
+   */
+  closeSmallTooltip(): this;
+
+  /**
+   * @description: 关闭弹窗
+   * @return {this}
+   */
+  closeTooltip(): this;
+
+  /**
+   * @description: 销毁当前对象
+   * @param {boolean} noDel 可选false:会自动delete释放所有属性，true：不delete绑定的变量
+   * @return
+   */
+  destroy(noDel?: boolean): void;
+
+  /**
+   * @description: 触发指定类型的事件
+   * @param {EventType} type 事件类型
+   * @param {object} data 传输的数据或对象，可在事件回调方法中event对象中获取进行使用
+   * @param {TilesetLayer} propagate 将事件传播给父类 (用addEventParent设置)
+   * @return {this}
+   */
+  fire(type: EventType, data: any, propagate?: TilesetLayer): this;
+
+  /**
+   * @description: 飞行定位至图层数据所在的视角
+   * @param {FlyToOptions} options 配置项
+   * @return {this}
+   */
+  flyTo(options?: FlyToOptions): this;
+
+  /**
+   * @description: 入场动画后再执行flyTo，直接调用flyTo可能造成入场动画失败
+   * @return {this}
+   */
+  flyToByAnimationEnd(): this;
+
+  /**
+   * @description: 获取绑定的右键菜单数组
+   * @return {Array<ContextMenuOption>}
+   */
+  getContextMenu(): ContextMenuOptions[];
+
+  /**
    * @description: 获取构件节点位置，现对于原始矩阵变化后的新位置
    * @param {Cesium.Cartesian3} position 原始位置
    * @return {Cesium.Cartesian3}
@@ -92,11 +217,145 @@ export interface TilesetLayer extends BaseGraphicLayer {
   getPositionByOrginMatrix(position: Cesium.Cartesian3): Cesium.Cartesian3;
 
   /**
+   * @description: 是否有绑定的右键菜单
+   * @return {boolean}
+   */
+  hasContextMenu(): boolean;
+
+  /**
+   * @description: 是否绑定了抛出事件到指定父类
+   * @param {Object} obj 父类对象
+   * @return {this}
+   */
+  hasEventParent(obj: any): this;
+
+  /**
+   * @description: 是否存在Popup绑定
+   * @return {boolean}
+   */
+  hasPopup(): boolean;
+
+  /**
+   * @description: 是否绑定了tooltip
+   * @return {boolean}
+   */
+  hasTooltip(): boolean;
+
+  /**
+   * @description: 是否有绑定指定的事件
+   * @param {EventType} type 事件类型
+   * @param {TilesetLayer} propagate 是否判断指定的父类 (用addEventParent设置的)
+   * @return {boolean}
+   */
+  listens(type: EventType, propagate?: TilesetLayer): boolean;
+
+  /**
+   * @description: 解除绑定指定类型事件监听器
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  off(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
+   * @description: 绑定指定类型事件监听器
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  on(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
+   * @description: 绑定一次性执行的指定类型事件监听器 与on类似，监听器只会被触发一次，然后被删除
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  once(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
+   * @description: 打开右键菜单
+   * @param {BaseGraphic|Cesium.Cartesian3} position 矢量对象 或 显示的位置
+   * @param {object} options 配置项
+   * @return {this}
+   */
+  openContextMenu(position: BaseGraphic | Cesium.Cartesian3, options?: object): this;
+
+  /**
+   * @description: 打开绑定的弹窗
+   * @param {BaseGraphic|Cesium.Cartesian3} position 矢量对象 或 显示的位置
+   * @param {BindPopupOption} options 配置项
+   * @return {this}
+   */
+  openPopup(position: BaseGraphic | Cesium.Cartesian3, options?: BindPopupOption): this;
+
+  /**
+   * @description: 显示小提示窗，一般用于鼠标操作的提示
+   * @param {Cesium.Cartesian2|Cesium.Cartesian3} position 显示的屏幕坐标位置 或 笛卡尔坐标位置
+   * @param {string} message 显示的内容
+   * @return {this}
+   */
+  openSmallTooltip(position: Cesium.Cartesian2 | Cesium.Cartesian3, message: string): this;
+
+  /**
+   * @description: 打开绑定的弹窗
+   * @param {BaseGraphic|Cesium.Cartesian3} position 矢量对象 或 显示的位置
+   * @param {BindTooltipOption} options 配置项
+   * @return {this}
+   */
+  openTooltip(position: BaseGraphic | Cesium.Cartesian3, options?: BindTooltipOption): this;
+
+  /**
+   * @description: 从地图上移除，同map.removeThing
+   * @param {boolean} destroy
+   * @return
+   */
+  remove(destroy: boolean): void;
+
+  /**
+   * @description: 移除抛出事件到父类
+   * @param {Object} obj 父类对象
+   * @return {this}
+   */
+  removeEventParent(obj: Object): this;
+
+  /**
    * @description: 设置透明度
    * @param {number} value 值
    * @return
    */
   setOpacity(value: number): void;
+
+  /**
+   * @description: 更新图层参数
+   * @param {ConstructorOptions} options 与类的构造方法参数相同
+   * @return {this}
+   */
+  setOptions(options: ConstructorOptions): this;
+
+  /**
+   * @description: 外部指定显示的单体化对象
+   * @param {BaseGraphic} graphic 本图层内的指定矢量对象
+   * @return
+   */
+  showDth(graphic: BaseGraphic): void;
+
+  /**
+   * @description: 显示错误弹窗， 调用cesium的cesiumWidget.showErrorPanel
+   * @param {string} title 标题
+   * @param {Object} error 错误内容对象
+   * @return {this}
+   */
+  showError(title: string, error: any): this;
+
+  /**
+   * @description: 将图层转为Json简单对象，用于存储后再传参加载
+   * @return {object}
+   */
+  toJSON(): object;
 
   /**
    * @description: 重新计算当前矩阵（需要是否存在世界矩阵时）
@@ -109,6 +368,27 @@ export interface TilesetLayer extends BaseGraphicLayer {
    * @return {Cesium.Matrix4}
    */
   updateMatrix2(): Cesium.Matrix4;
+
+  /**
+   * @description: 解除绑定的右键菜单
+   * @param {boolean} stopPropagation 单击事件中是否继续冒泡查找
+   * @return {this}
+   */
+  unbindContextMenu(stopPropagation?: boolean): this;
+
+  /**
+   * @description: 解除绑定的鼠标单击对象后的弹窗
+   * @param {boolean} stopPropagation 单击事件中是否继续冒泡查找
+   * @return {this}
+   */
+  unbindPopup(stopPropagation?: boolean): this;
+
+  /**
+   * @description: 解除绑定的鼠标移入对象后的弹窗
+   * @param {boolean} stopPropagation 单击事件中是否继续冒泡查找
+   * @return {this}
+   */
+  unbindTooltip(stopPropagation?: boolean): this;
 }
 
 // 构造函数配置项
@@ -231,3 +511,20 @@ export interface ConstructorOptions extends BaseGraphicLayerConstructorOptions {
     opacity?: number;
   };
 }
+
+// 支持事件类型集合
+type TilesetLayerEventTypeCollection = BaseGraphicLayer["EventType"] &
+  Pick<
+    EventTypeCollection,
+    // 3dtiles模型，模型瓦片初始化完成 该回调只执行一次
+    | "initialTilesLoaded"
+    // 3dtiles模型
+    | "allTilesLoaded"
+    // 完成加载，但未做任何其他处理前
+    | "loadBefore"
+    // 完成加载，执行所有内部处理后
+    | "load"
+  >;
+
+// 支持事件类型
+type EventType = TilesetLayerEventTypeCollection[keyof TilesetLayerEventTypeCollection];

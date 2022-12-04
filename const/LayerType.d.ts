@@ -2,12 +2,13 @@
  * @Author: Quarter
  * @Date: 2022-11-22 19:31:45
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 19:52:33
+ * @LastEditTime: 2022-12-03 17:22:19
  * @FilePath: /cetc3d-declaration/const/LayerType.d.ts
  * @Description: 图层类型
  */
 
-export interface LayerType {
+// 图层类型
+export interface LayerTypeCollection {
   // 3dtiles三维模型图层
   "3dtiles": "3dtiles";
   // ArcGIS服务
@@ -103,3 +104,6 @@ export interface LayerType {
   // 标准XYZ金字塔
   xyz: "xyz";
 }
+
+// 图层类型值
+export type LayerType = LayerTypeCollection[keyof LayerTypeCollection];

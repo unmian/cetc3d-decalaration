@@ -2,13 +2,13 @@
  * @Author: Quarter
  * @Date: 2022-11-21 11:39:12
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 19:26:32
+ * @LastEditTime: 2022-12-03 17:22:57
  * @FilePath: /cetc3d-declaration/const/MoveType.d.ts
  * @Description: 常量
  */
 
 // 摄像机移动类型
-export interface MoveType {
+export interface MoveTypeCollection {
   // 向屏幕中心靠近
   readonly ENLARGE: number;
   // 向屏幕中心远离
@@ -22,3 +22,6 @@ export interface MoveType {
   // 相机原地下旋转
   readonly BOTTOM_ROTATE: number;
 }
+
+// 摄像机移动类型值
+export type MoveType = MoveTypeCollection[keyof MoveTypeCollection];

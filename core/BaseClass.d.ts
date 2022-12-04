@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 11:26:25
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-03 10:42:45
+ * @LastEditTime: 2022-12-04 10:35:28
  * @FilePath: /cetc3d-declaration/core/BaseClass.d.ts
  * @Description: 基础类，SDK中几乎所有类的基类，都是继承该基类的
  */
@@ -10,6 +10,10 @@
 import { EventType } from "../const/EventType";
 
 export interface BaseClass {
+  /**
+   * @description: 构造函数
+   * @return {BaseClass}
+   */
   new (): BaseClass;
 
   /**
@@ -31,14 +35,14 @@ export interface BaseClass {
    * @param {EventType} type 事件类型
    * @param {object} data 传输的数据或对象，可在事件回调方法中event对象中获取进行使用
    * @param {BaseClass} propagate 将事件传播给父类 (用addEventParent设置)
-   * @return {BaseLayer}
+   * @return {this}
    */
   fire(type: EventType, data: any, propagate?: BaseClass): this;
 
   /**
    * @description: 是否绑定了抛出事件到指定父类
    * @param {Object} obj 父类对象
-   * @return {BaseLayer}
+   * @return {this}
    */
   hasEventParent(obj: any): this;
 
@@ -55,7 +59,7 @@ export interface BaseClass {
    * @param {EventType|Array<EventType>} types 事件类型
    * @param {Function} fn 绑定的监听器回调方法
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
-   * @return {boolean}
+   * @return {this}
    */
   off(types: EventType | EventType[], fn: Function, context?: Object): this;
 
@@ -64,7 +68,7 @@ export interface BaseClass {
    * @param {EventType|Array<EventType>} types 事件类型
    * @param {Function} fn 绑定的监听器回调方法
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
-   * @return {boolean}
+   * @return {this}
    */
   on(types: EventType | EventType[], fn: Function, context?: Object): this;
 
@@ -73,14 +77,14 @@ export interface BaseClass {
    * @param {EventType|Array<EventType>} types 事件类型
    * @param {Function} fn 绑定的监听器回调方法
    * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
-   * @return {boolean}
+   * @return {this}
    */
   once(types: EventType | EventType[], fn: Function, context?: Object): this;
 
   /**
    * @description: 移除抛出事件到父类
    * @param {Object} obj 父类对象
-   * @return {boolean}
+   * @return {this}
    */
   removeEventParent(obj: Object): this;
 }

@@ -2,12 +2,13 @@
  * @Author: Quarter
  * @Date: 2022-12-01 17:13:01
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-01 17:33:46
+ * @LastEditTime: 2022-12-03 17:21:38
  * @FilePath: /cetc3d-declaration/const/GraphicType.d.ts
  * @Description: 矢量数据类型
  */
 
-export interface GraphicType {
+// 矢量数据类型
+export interface GraphicTypeCollection {
   // 文本点,对应类为：LabelEntity
   readonly label: "label";
   // 文本点（图元）,对应类为：LabelPrimitive
@@ -155,3 +156,6 @@ export interface GraphicType {
   // 卫星综合体【cetc3d-space插件】，对应类为：Satellite
   readonly satellite: "satellite";
 }
+
+// 矢量数据类型值
+export type GraphicType = GraphicTypeCollection[keyof GraphicTypeCollection];

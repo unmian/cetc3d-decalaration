@@ -2,7 +2,7 @@
  * @Author: Quarter
  * @Date: 2022-11-21 12:57:05
  * @LastEditors: Quarter
- * @LastEditTime: 2022-12-02 14:40:27
+ * @LastEditTime: 2022-12-04 14:06:43
  * @FilePath: /cetc3d-declaration/map/Map.d.ts
  * @Description: 地图类 ，这是构造三维地球的一切的开始起点
  */
@@ -15,7 +15,6 @@ import { TerrainType } from "../const/TerrainType";
 import { BaseControl } from "../control/BaseControl";
 import { ConstructorOptions as CompassConstructorOptions } from "../control/Compass";
 import { ConstructorOptions as DistanceLegendConstructorOptions } from "../control/DistanceLegend";
-import { BaseClass } from "../core/BaseClass";
 import { BaseThing } from "../core/BaseThing";
 import { LatLngPoint } from "../core/LatLngPoint";
 import { BaseEffect } from "../effect/BaseEffect";
@@ -25,86 +24,11 @@ import { BaseGraphicLayer } from "../layer/BaseGraphicLayer";
 import { GraphicLayer } from "../layer/graphicLayer/GraphicLayer";
 import { BaseTileLayer } from "../layer/tileLayer/BaseTileLayer";
 import { KeyboardRoam } from "./control/KeyboardRoam";
+import { EventTypeCollection } from "const/EventType";
 
-export interface Map extends BaseClass {
+export interface Map {
   // Map支持的EventType事件类型
-  readonly EventType: {
-    // 添加图层
-    addLayer: "addLayer";
-    // 移除图层
-    removeLayer: "removeLayer";
-    // 相机开启移动前 场景事件
-    cameraMoveStart: "cameraMoveStart";
-    // 相机移动完成后 场景事件
-    cameraMoveEnd: "cameraMoveEnd";
-    // 相机位置完成 场景事件
-    cameraChanged: "cameraChanged";
-    // 场景更新前 场景事件
-    preUpdate: "preUpdate";
-    // 场景更新后 场景事件
-    postUpdate: "postUpdate";
-    // 场景渲染前 场景事件
-    preRender: "preRender";
-    // 场景渲染后 场景事件
-    postRender: "postRender";
-    // 场景模式(2D/3D/哥伦布)变换前 场景事件
-    morphStart: "morphStart";
-    // 完成场景模式(2D/3D/哥伦布)变换 场景事件
-    morphComplete: "morphComplete";
-    // 时钟跳动 场景事件
-    clockTick: "clockTick";
-    // 左键单击 鼠标事件
-    click: "click";
-    // 左键单击到矢量或模型数据时 鼠标事件
-    clickGraphic: "clickGraphic";
-    // 左键单击到wms或arcgis瓦片服务的对应矢量数据时
-    clickTileGraphic: "clickTileGraphic";
-    // 左键单击地图空白（未单击到矢量或模型数据）时 鼠标事件
-    clickMap: "clickMap";
-    // 左键双击 鼠标事件
-    dblClick: "dblClick";
-    // 左键鼠标按下 鼠标事件
-    leftDown: "leftDown";
-    // 左键鼠标按下后释放 鼠标事件
-    leftUp: "leftUp";
-    // 鼠标移动 鼠标事件
-    mouseMove: "mouseMove";
-    // 鼠标移动（拾取目标，并延迟处理） 鼠标事件
-    mouseMoveTarget: "mouseMoveTarget";
-    // 鼠标滚轮滚动 鼠标事件
-    wheel: "wheel";
-    // 右键单击 鼠标事件
-    rightClick: "rightClick";
-    // 右键鼠标按下 鼠标事件
-    rightDown: "rightDown";
-    // 右键鼠标按下后释放 鼠标事件
-    rightUp: "rightUp";
-    // 中键单击 鼠标事件
-    middleClick: "middleClick";
-    // 中键鼠标按下 鼠标事件
-    middleDown: "middleDown";
-    // 中键鼠标按下后释放 鼠标事件
-    middleUp: "middleUp";
-    // 在触摸屏上两指缩放开始 鼠标事件
-    pinchStart: "pinchStart";
-    // 在触摸屏上两指缩放结束 鼠标事件
-    pinchEnd: "pinchEnd";
-    // 在触摸屏上两指移动 鼠标事件
-    pinchMove: "pinchMove";
-    // 鼠标按下 [左中右3键都触发] 鼠标事件
-    mouseDown: "mouseDown";
-    // 鼠标按下后释放 [左中右3键都触发] 鼠标事件
-    mouseUp: "mouseUp";
-    // 鼠标移入 鼠标事件
-    mouseOver: "mouseOver";
-    // 鼠标移出 鼠标事件
-    mouseOut: "mouseOut";
-    // 按键按下 键盘事件
-    keydown: "keydown";
-    // 按键按下后释放 键盘事件
-    keyup: "keyup";
-  };
-
+  readonly EventType: MapEventTypeCollection;
   // 获取或设置当前显示的底图，设置时可以传入图层id或name
   basemap: string | number | BaseTileLayer;
   // 获取相机
@@ -168,6 +92,13 @@ export interface Map extends BaseClass {
    * @return {this}
    */
   addEffect(item: BaseEffect): this;
+
+  /**
+   * @description: 添加抛出事件到父类，它将接收传播的事件
+   * @param {Object} obj 父类对象
+   * @return {this}
+   */
+  addEventParent(obj: object): this;
 
   /**
    * @description: 添加图层到地图上
@@ -245,10 +176,11 @@ export interface Map extends BaseClass {
   closeTooltip(): this;
 
   /**
-   * @description: 销毁地图
+   * @description: 销毁当前对象
+   * @param {boolean} noDel 可选false:会自动delete释放所有属性，true：不delete绑定的变量
    * @return
    */
-  destroy(): void;
+  destroy(noDel?: boolean): void;
 
   /**
    * @description: 遍历每一个控件并将其作为参数传递给回调函数
@@ -280,6 +212,15 @@ export interface Map extends BaseClass {
    * @return
    */
   expImage(options: ExportImageOptions): void;
+
+  /**
+   * @description: 触发指定类型的事件
+   * @param {EventType} type 事件类型
+   * @param {object} data 传输的数据或对象，可在事件回调方法中event对象中获取进行使用
+   * @param {Map} propagate 将事件传播给父类 (用addEventParent设置)
+   * @return {this}
+   */
+  fire(type: EventType, data: any, propagate?: Map): this;
 
   /**
    * @description: 飞行到默认视角， 一般为config.json中的center参数配置的视角
@@ -494,6 +435,41 @@ export interface Map extends BaseClass {
   isFlyAnimation(): boolean;
 
   /**
+   * @description: 是否有绑定指定的事件
+   * @param {EventType} type 事件类型
+   * @param {Map} propagate 是否判断指定的父类 (用addEventParent设置的)
+   * @return {boolean}
+   */
+  listens(type: EventType, propagate?: Map): boolean;
+
+  /**
+   * @description: 解除绑定指定类型事件监听器
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  off(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
+   * @description: 绑定指定类型事件监听器
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  on(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
+   * @description: 绑定一次性执行的指定类型事件监听器 与on类似，监听器只会被触发一次，然后被删除
+   * @param {EventType|Array<EventType>} types 事件类型
+   * @param {Function} fn 绑定的监听器回调方法
+   * @param {Object} context 侦听器的上下文(this关键字将指向的对象)
+   * @return {this}
+   */
+  once(types: EventType | EventType[], fn: Function, context?: Object): this;
+
+  /**
    * @description: 打开右键菜单
    * @param {Cesium.Cartesian3} position 矢量对象 或 显示的位置
    * @param {Array<ContextMenuOptions>|BaseGraphic|BaseGraphicLayer} content 右键菜单配置数组 或 矢量数据/图层
@@ -578,6 +554,13 @@ export interface Map extends BaseClass {
    * @return {this}
    */
   removeEffect(item: BaseEffect, hasDestory: boolean): this;
+
+  /**
+   * @description: 移除抛出事件到父类
+   * @param {Object} obj 父类对象
+   * @return {this}
+   */
+  removeEventParent(obj: Object): this;
 
   /**
    * @description: 移除图层
@@ -694,6 +677,88 @@ export interface ConstructorOptions {
   // 使用的语言（如中文、英文等）
   lang?: LangType;
 }
+
+// 支持事件类型集合
+type MapEventTypeCollection = Pick<
+  EventTypeCollection,
+  // 添加图层
+  | "addLayer"
+  // 移除图层
+  | "removeLayer"
+  // 相机开启移动前 场景事件
+  | "cameraMoveStart"
+  // 相机移动完成后 场景事件
+  | "cameraMoveEnd"
+  // 相机位置完成 场景事件
+  | "cameraChanged"
+  // 场景更新前 场景事件
+  | "preUpdate"
+  // 场景更新后 场景事件
+  | "postUpdate"
+  // 场景渲染前 场景事件
+  | "preRender"
+  // 场景渲染后 场景事件
+  | "postRender"
+  // 场景模式(2D/3D/哥伦布)变换前 场景事件
+  | "morphStart"
+  // 完成场景模式(2D/3D/哥伦布)变换 场景事件
+  | "morphComplete"
+  // 时钟跳动 场景事件
+  | "clockTick"
+  // 左键单击 鼠标事件
+  | "click"
+  // 左键单击到矢量或模型数据时 鼠标事件
+  | "clickGraphic"
+  // 左键单击到wms或arcgis瓦片服务的对应矢量数据时
+  | "clickTileGraphic"
+  // 左键单击地图空白（未单击到矢量或模型数据）时 鼠标事件
+  | "clickMap"
+  // 左键双击 鼠标事件
+  | "dblClick"
+  // 左键鼠标按下 鼠标事件
+  | "leftDown"
+  // 左键鼠标按下后释放 鼠标事件
+  | "leftUp"
+  // 鼠标移动 鼠标事件
+  | "mouseMove"
+  // 鼠标移动（拾取目标，并延迟处理） 鼠标事件
+  | "mouseMoveTarget"
+  // 鼠标滚轮滚动 鼠标事件
+  | "wheel"
+  // 右键单击 鼠标事件
+  | "rightClick"
+  // 右键鼠标按下 鼠标事件
+  | "rightDown"
+  // 右键鼠标按下后释放 鼠标事件
+  | "rightUp"
+  // 中键单击 鼠标事件
+  | "middleClick"
+  // 中键鼠标按下 鼠标事件
+  | "middleDown"
+  // 中键鼠标按下后释放 鼠标事件
+  | "middleUp"
+  // 在触摸屏上两指缩放开始 鼠标事件
+  | "pinchStart"
+  // 在触摸屏上两指缩放结束 鼠标事件
+  | "pinchEnd"
+  // 在触摸屏上两指移动 鼠标事件
+  | "pinchMove"
+  // 鼠标按下 [左中右3键都触发] 鼠标事件
+  | "mouseDown"
+  // 鼠标按下后释放 [左中右3键都触发] 鼠标事件
+  | "mouseUp"
+  // 鼠标移入 鼠标事件
+  | "mouseOver"
+  // 鼠标移出 鼠标事件
+  | "mouseOut"
+  // 按键按下 键盘事件
+  | "keydown"
+  // 按键按下后释放 键盘事件
+  | "keyup"
+>;
+
+// 支持事件类型
+type EventType = MapEventTypeCollection[keyof MapEventTypeCollection];
 
 // 底图图层配置
 export type BasemapOptions = {

@@ -2,13 +2,13 @@
  * @Author: Quarter
  * @Date: 2022-11-21 11:39:12
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 19:26:14
+ * @LastEditTime: 2022-12-03 17:21:16
  * @FilePath: /cetc3d-declaration/const/EventType.d.ts
  * @Description: 常量
  */
 
 // 事件类型 枚举（所有事件统一的入口）
-export interface EventType {
+export interface EventTypeCollection {
   // 添加对象
   add: "add";
   // 移除对象
@@ -158,3 +158,6 @@ export interface EventType {
   // 时钟跳动 场景事件
   readonly clockTick: "clockTick";
 }
+
+// 事件类型值
+export type EventType = EventTypeCollection[keyof EventTypeCollection];

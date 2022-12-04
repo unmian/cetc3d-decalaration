@@ -2,13 +2,13 @@
  * @Author: Quarter
  * @Date: 2022-11-21 11:39:12
  * @LastEditors: Quarter
- * @LastEditTime: 2022-11-22 19:24:13
+ * @LastEditTime: 2022-12-03 17:21:01
  * @FilePath: /cetc3d-declaration/const/CRS.d.ts
  * @Description: 常量
  */
 
 // 坐标系
-export interface CRS {
+export interface CRSCollection {
   // Web墨卡托投影坐标系
   readonly EPSG3857: "EPSG:3857";
   // WGS84地理坐标系
@@ -26,3 +26,6 @@ export interface CRS {
   // CGCS2000 Gauss-Kruger CM 平面投影，6度分带，横坐标前不加带号。 范围：EPSG:4502 到 EPSG:4512
   readonly CGCS2000_GK_CM_6: "CGCS2000_GK_CM_6";
 }
+
+// 坐标系值
+export type CRS = CRSCollection[keyof CRSCollection];
